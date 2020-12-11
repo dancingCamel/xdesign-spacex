@@ -17,19 +17,34 @@ const Left = styled.div`
 `;
 
 const Id = styled.div`
-    margin: 20px;
+    margin: 10px 20px;
+    font-size: 2em;
 `;
 
-const Mission = styled.div`
-    margin: 20px;
+const Mission = styled.div.attrs({
+    className: "normalFont",
+})`
+    margin: 10px 20px;
+    font-size: 2em;
 `;
 
 const Right = styled.div`
     display: flex;
     flex-direction: column;
+    padding-right: 10px;
 `;
 
-const LaunchItem = ({ key, id, mission, rocket, date }) => {
+const RocketName = styled.div`
+    align-self: flex-end;
+    margin: 5px 0;
+`;
+
+const LaunchItem = ({ id, mission, rocket, date }) => {
+    const unixDate = new Date(0);
+    unixDate.setUTCSeconds(date);
+
+    const readableDate = unixDate.toDateString();
+
     return (
         <div>
             <Box>
@@ -38,8 +53,8 @@ const LaunchItem = ({ key, id, mission, rocket, date }) => {
                     <Mission>{mission}</Mission>
                 </Left>
                 <Right>
-                    <div className="dateTag">{date}</div>
-                    <div className="rocketName">{rocket}</div>
+                    <div className="dateTag normalFont">{readableDate}</div>
+                    <RocketName>{rocket}</RocketName>
                 </Right>
             </Box>
         </div>

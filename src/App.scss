@@ -1,0 +1,163 @@
+$primary-blue: #215184;
+$font-color: #545454;
+$font-family: "Brandon Grotesque", Arial, Helvetica, sans-serif;
+
+@font-face {
+    font-family: "Brandon Grotesque";
+    src: url("assets/font/BrandonGrotesque-Bold.woff2") format("woff2"),
+        url("assets/font/BrandonGrotesque-Bold.woff") format("woff"),
+        url("assets/font/BrandonGrotesque-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Brandon Grotesque";
+    src: url("assets/font/BrandonGrotesque-Regular.woff2") format("woff2"),
+        url("assets/font/BrandonGrotesque-Regular.woff") format("woff"),
+        url("assets/font/BrandonGrotesque-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Brandon Grotesque";
+    src: url("assets/font/BrandonGrotesque-RegularItalic.woff2") format("woff2"),
+        url("assets/font/BrandonGrotesque-RegularItalic.woff") format("woff"),
+        url("assets/font/BrandonGrotesque-RegularItalic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Brandon Grotesque";
+    src: url("assets/font/BrandonGrotesque-Black.woff2") format("woff2"),
+        url("assets/font/BrandonGrotesque-Black.woff") format("woff"),
+        url("assets/font/BrandonGrotesque-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Brandon Grotesque";
+    src: url("assets/font/BrandonGrotesque-Medium.woff2") format("woff2"),
+        url("assets/font/BrandonGrotesque-Medium.woff") format("woff"),
+        url("assets/font/BrandonGrotesque-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+.app {
+    box-sizing: border-box;
+    color: $font-color;
+    width: 100%;
+    overflow-x: hidden;
+    font-family: "Brandon Grotesque", Arial, sans-serif;
+    font-weight: bold;
+}
+
+.normalFont {
+    font-weight: normal;
+}
+
+#logoImg {
+    height: calc(15px + 1vh);
+    margin-left: 40px;
+}
+
+#spacedText {
+    letter-spacing: 2px;
+}
+
+#refreshBtn {
+    color: white;
+    background-color: $primary-blue;
+    border-radius: 20px 0 0 20px;
+    width: calc(60px + 5vw);
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    height: calc(30px + 1vmin);
+    cursor: pointer;
+}
+
+#refreshIcon {
+    display: inline-block;
+    height: calc(5px + 1vmin);
+    margin-left: 5px;
+}
+
+// select dropdown
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    // outline: 0;
+    background: $primary-blue;
+    background-image: none;
+    // border: 1px solid black;
+}
+.select {
+    position: relative;
+    display: block;
+    // width: 95%;
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 2.5em;
+    line-height: 2.5;
+    color: white;
+    background: $primary-blue;
+    overflow: hidden;
+}
+select {
+    // width: 100%;
+    width: 180px;
+    height: 100%;
+    margin: 0;
+    padding: 0 0 0 0.7em;
+    color: white;
+    cursor: pointer;
+    // border-radius: 4px;
+}
+
+.select::after {
+    content: "\25BC";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 1em;
+    background: $primary-blue;
+    pointer-events: none;
+}
+.select:hover::after {
+    color: white;
+}
+
+.select::after {
+    -webkit-transition: 0.25s all ease;
+    -o-transition: 0.25s all ease;
+    transition: 0.25s all ease;
+}
+
+#yearFilter option {
+    font-weight: bold;
+    word-spacing: 3px;
+}
+
+#sortBtn {
+    color: white;
+    background-color: $primary-blue;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 2.5em;
+    width: 180px;
+    cursor: pointer;
+}
+
+#sortIcon {
+    height: 1em;
+}
