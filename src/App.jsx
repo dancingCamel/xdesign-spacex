@@ -104,34 +104,30 @@ const App = () => {
     };
 
     const sortLaunches = (direction) => {
-        // direction = desc/asc
         if (direction === "descending") {
             setLaunches((launches) => {
                 let temp = launches;
-                console.log(temp);
-                // sort here and return sorted array
+
                 temp.sort(function (a, b) {
                     return a.flight_number - b.flight_number;
                 });
+
                 return temp;
             });
         } else {
             setLaunches((launches) => {
                 let temp = launches;
-                console.log(temp);
 
-                // sort here and return sorted array
                 temp.sort(function (a, b) {
                     return b.flight_number - a.flight_number;
                 });
+
                 return temp;
             });
         }
-        // setLaunches = sorted list from current state of launches
     };
 
     const filterLaunches = (year) => {
-        // setLaunches = launches from session storage filtered by year
         let allLaunches = JSON.parse(sessionStorage.getItem("latestLaunches"));
         let filteredLaunches;
         filteredLaunches = allLaunches.filter(
@@ -149,18 +145,14 @@ const App = () => {
         getYears();
     }, [loadCount]);
 
-    // call getAllLaunches when hit refresh button
-
     const handleSortclick = () => {
-        console.log("clicked sort");
-
         setSortDirection((direction) => {
             if (direction === "ascending") {
                 setDirectionDisplay("Ascending");
                 return "descending";
             }
-            setDirectionDisplay("Descending");
 
+            setDirectionDisplay("Descending");
             return "ascending";
         });
 
@@ -175,9 +167,7 @@ const App = () => {
     };
 
     const handleFilterYear = () => {
-        // if no year selected set back to all launches and sort according to current direction
         if (yearFilterRef.current.value === "") {
-            console.log("No year selected");
             const allLaunches = JSON.parse(
                 sessionStorage.getItem("latestLaunches")
             );
@@ -194,16 +184,13 @@ const App = () => {
     return (
         <AppWrapper>
             <Header>
-                {/* flexbox header bar. justify-content between. align refresh button end */}
                 <div>
-                    {/* logo */}
                     <img src={Logo} alt="Space X Logo" id="logoImg" />
                     <span id="spacedText" className="normalFont">
                         LAUNCHES
                     </span>
                 </div>
                 <div id="refreshBtn" onClick={handleReloadClick}>
-                    {/* refresh button */}
                     Reload Data
                     <img
                         src={refresh1x}
@@ -216,8 +203,6 @@ const App = () => {
 
             <main>
                 <ContentWrapper>
-                    {/* button go here. aligned on right */}
-                    {/* page wrapper with flexbox justify-content-between */}
                     <ButtonWrapper>
                         <div className="select">
                             <select
@@ -253,7 +238,6 @@ const App = () => {
                         </Left>
 
                         <Right>
-                            {/* loop over api return data and show on screen */}
                             {launches.map((launch) => (
                                 <LaunchItem
                                     key={launch.mission_name}
