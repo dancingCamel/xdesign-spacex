@@ -88,6 +88,7 @@ select {
   margin: 0;
   padding: 0 0 0 0.7em;
   color: white;
+  font-weight: bold;
   cursor: pointer; }
 
 .select::after {
@@ -110,7 +111,9 @@ select {
 
 #yearFilter option {
   font-weight: bold;
-  word-spacing: 3px; }
+  word-spacing: 3px;
+  background-color: white;
+  color: #545454; }
 
 #sortBtn {
   color: white;

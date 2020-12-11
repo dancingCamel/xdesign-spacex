@@ -118,6 +118,7 @@ select {
     margin: 0;
     padding: 0 0 0 0.7em;
     color: white;
+    font-weight: bold;
     cursor: pointer;
     // border-radius: 4px;
 }
@@ -145,6 +146,8 @@ select {
 #yearFilter option {
     font-weight: bold;
     word-spacing: 3px;
+    background-color: white;
+    color: $font-color;
 }
 
 #sortBtn {

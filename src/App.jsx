@@ -81,7 +81,7 @@ const App = () => {
                 let temp = launches;
                 // sort here and return sorted array
                 temp.sort(function (a, b) {
-                    return a.launch_year - b.launch_year;
+                    return a.flight_number - b.flight_number;
                 });
                 return temp;
             });
@@ -90,7 +90,7 @@ const App = () => {
                 let temp = launches;
                 // sort here and return sorted array
                 temp.sort(function (a, b) {
-                    return b.launch_year - a.launch_year;
+                    return b.flight_number - a.flight_number;
                 });
                 return temp;
             });
@@ -100,6 +100,11 @@ const App = () => {
 
     const filterLaunches = (year) => {
         // setLaunches = launches from session storage filtered by year
+        let allLaunches = JSON.parse(sessionStorage.getItem("latestLaunches"));
+        allLaunches = allLaunches.filter(
+            (launch) => launch.launch_year == year
+        );
+        console.log(allLaunches);
         // {todos.filter((todo) => !todo.complete).length} left to do
     };
 
@@ -124,6 +129,14 @@ const App = () => {
 
         sortLaunches(sortDirection);
     };
+
+    const handleReloadClick = () => {
+        console.log("clicked reload");
+        getAllLaunches();
+        setSortDirection("ascending");
+        setDirectionDisplay("Descending");
+    };
+
     return (
         <AppWrapper>
             <Header>
@@ -135,7 +148,7 @@ const App = () => {
                         LAUNCHES
                     </span>
                 </div>
-                <div id="refreshBtn">
+                <div id="refreshBtn" onClick={handleReloadClick}>
                     {/* refresh button */}
                     Reload Data
                     <img
@@ -153,7 +166,7 @@ const App = () => {
                     {/* page wrapper with flexbox justify-content-between */}
                     <ButtonWrapper>
                         <div className="select">
-                            <select className="yearFilter">
+                            <select id="yearFilter">
                                 <option value="">Filter by Year</option>
                                 {/* dynamically update years */}
                             </select>

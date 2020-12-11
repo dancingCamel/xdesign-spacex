@@ -42,8 +42,25 @@ const RocketName = styled.div`
 const LaunchItem = ({ id, mission, rocket, date }) => {
     const unixDate = new Date(0);
     unixDate.setUTCSeconds(date);
-
     const readableDate = unixDate.toDateString();
+    let dateArray = readableDate.split(" ");
+    dateArray.shift();
+
+    if (dateArray[1].charAt(dateArray[1].length - 1) === "1") {
+        dateArray[1] += "st";
+    } else if (dateArray[1].charAt(dateArray[1].length - 1) === "2") {
+        dateArray[1] += "nd";
+    } else if (dateArray[1].charAt(dateArray[1].length - 1) === "3") {
+        dateArray[1] += "rd";
+    } else {
+        dateArray[1] += "th";
+    }
+
+    if (dateArray[1].charAt(0) === "0") {
+        dateArray[1] = dateArray[1].slice(1);
+    }
+
+    const formattedDate = dateArray.join(" ");
 
     return (
         <div>
@@ -53,7 +70,7 @@ const LaunchItem = ({ id, mission, rocket, date }) => {
                     <Mission>{mission}</Mission>
                 </Left>
                 <Right>
-                    <div className="dateTag normalFont">{readableDate}</div>
+                    <div className="dateTag normalFont">{formattedDate}</div>
                     <RocketName>{rocket}</RocketName>
                 </Right>
             </Box>
