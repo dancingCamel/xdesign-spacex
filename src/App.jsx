@@ -101,11 +101,11 @@ const App = () => {
     const filterLaunches = (year) => {
         // setLaunches = launches from session storage filtered by year
         let allLaunches = JSON.parse(sessionStorage.getItem("latestLaunches"));
-        allLaunches = allLaunches.filter(
+        filteredLaunches = allLaunches.filter(
             (launch) => launch.launch_year == year
         );
-        console.log(allLaunches);
-        // {todos.filter((todo) => !todo.complete).length} left to do
+
+        setLaunches(filteredLaunches);
     };
 
     useEffect(() => {
