@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import LaunchItem from "./components/LaunchItem";
 import Logo from "./assets/spacex-logo.png";
@@ -56,9 +56,13 @@ const Right = styled.div`
 `;
 
 const App = () => {
+    const [loadCount, setLoadCount] = useState(0);
     const [launches, setLaunches] = useState([]);
     const [sortDirection, setSortDirection] = useState("ascending");
     const [directionDisplay, setDirectionDisplay] = useState("Descending");
+    const [years, setYears] = useState([]);
+
+    const yearFilterRef = useRef();
 
     const getAllLaunches = async () => {
         const latestLaunches = await fetch(
@@ -71,7 +75,32 @@ const App = () => {
             JSON.stringify(latestLaunchesJson)
         );
 
-        setLaunches(latestLaunchesJson);
+        setLaunches((current) => {
+            return latestLaunchesJson;
+        });
+        setLoadCount((count) => {
+            return (count += 1);
+        });
+    };
+
+    const getYears = () => {
+        let years = [];
+
+        launches.forEach((launch) => {
+            if (!years.includes(launch.launch_year)) {
+                years.push(launch.launch_year);
+            }
+        });
+
+        const yearsOptions = years.map((year, i) => {
+            return (
+                <option key={i} value={year}>
+                    {year}
+                </option>
+            );
+        });
+
+        setYears(yearsOptions);
     };
 
     const sortLaunches = (direction) => {
@@ -79,6 +108,7 @@ const App = () => {
         if (direction === "descending") {
             setLaunches((launches) => {
                 let temp = launches;
+                console.log(temp);
                 // sort here and return sorted array
                 temp.sort(function (a, b) {
                     return a.flight_number - b.flight_number;
@@ -88,6 +118,8 @@ const App = () => {
         } else {
             setLaunches((launches) => {
                 let temp = launches;
+                console.log(temp);
+
                 // sort here and return sorted array
                 temp.sort(function (a, b) {
                     return b.flight_number - a.flight_number;
@@ -101,6 +133,7 @@ const App = () => {
     const filterLaunches = (year) => {
         // setLaunches = launches from session storage filtered by year
         let allLaunches = JSON.parse(sessionStorage.getItem("latestLaunches"));
+        let filteredLaunches;
         filteredLaunches = allLaunches.filter(
             (launch) => launch.launch_year == year
         );
@@ -111,6 +144,10 @@ const App = () => {
     useEffect(() => {
         getAllLaunches();
     }, []);
+
+    useEffect(() => {
+        getYears();
+    }, [loadCount]);
 
     // call getAllLaunches when hit refresh button
 
@@ -131,10 +168,27 @@ const App = () => {
     };
 
     const handleReloadClick = () => {
-        console.log("clicked reload");
         getAllLaunches();
         setSortDirection("ascending");
         setDirectionDisplay("Descending");
+        yearFilterRef.current.value = "";
+    };
+
+    const handleFilterYear = () => {
+        // if no year selected set back to all launches and sort according to current direction
+        if (yearFilterRef.current.value === "") {
+            console.log("No year selected");
+            const allLaunches = JSON.parse(
+                sessionStorage.getItem("latestLaunches")
+            );
+            setLaunches((current) => {
+                return allLaunches;
+            });
+            setSortDirection("ascending");
+            setDirectionDisplay("Descending");
+        } else {
+            filterLaunches(yearFilterRef.current.value);
+        }
     };
 
     return (
@@ -166,9 +220,14 @@ const App = () => {
                     {/* page wrapper with flexbox justify-content-between */}
                     <ButtonWrapper>
                         <div className="select">
-                            <select id="yearFilter">
+                            <select
+                                id="yearFilter"
+                                ref={yearFilterRef}
+                                onChange={handleFilterYear}
+                            >
                                 <option value="">Filter by Year</option>
                                 {/* dynamically update years */}
+                                {years}
                             </select>
                         </div>
                         <div id="sortBtn" onClick={handleSortclick}>
@@ -214,16 +273,4 @@ const App = () => {
 
 export default App;
 
-// notes
 // Designs are available from: [https://sketch.cloud/s/yyv1b/agmoaZP](https://sketch.cloud/s/yyv1b/agmoaZP)
-
-// The API documentation is available from:
-// Postman - [https://docs.spacexdata.com](https://docs.spacexdata.com/)
-// GitHub - [https://github.com/r-spacex/SpaceX-API](https://github.com/r-spacex/SpaceX-API)
-
-// ## Stories:
-
-// - As a user, I want the ability to load the full list of SpaceX launches from the SpaceX API
-// - As a user, I want the ability to reload the data to see any new changes
-// - As a user, I want the ability to filter the launch list by year
-// - As a user, I want the ability to sort all launches by date (ascending/descending)
